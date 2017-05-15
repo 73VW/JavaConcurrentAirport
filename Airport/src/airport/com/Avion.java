@@ -4,7 +4,7 @@ import java.util.concurrent.BlockingQueue;
 
 public class Avion implements Runnable {
 
-	AirportFrame airportFrame;
+	AirportFrameOld airportFrame;
 	String codePlane;
 	BlockingQueue<Avion> airArr;
 	BlockingQueue<Avion> tarmacLand;
@@ -18,7 +18,7 @@ public class Avion implements Runnable {
 
 	int position;
 	
-	public Avion(AirportFrame _airportFrame, String _codePlane, BlockingQueue<Avion> _airArr, BlockingQueue<Avion> _tarmacLand,
+	public Avion(AirportFrameOld _airportFrame, String _codePlane, BlockingQueue<Avion> _airArr, BlockingQueue<Avion> _tarmacLand,
 			BlockingQueue<Avion> _tarmacTakeOff, BlockingQueue<Avion> _terminal, BlockingQueue<Avion> _airDep,
 			int _nbAvion, int _nbPisteArr, int _nbPisteDep, int _nbPlace) {
 		airportFrame = _airportFrame;

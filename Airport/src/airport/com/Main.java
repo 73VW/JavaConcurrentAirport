@@ -16,7 +16,7 @@ public class Main {
 		int nbPisteDep = 2;//"" de depart
 		int nbPlace = 4; //parking 
 
-		AirportFrame airportFrame = new AirportFrame(nbPisteArr, nbPisteDep, nbPlace, nbAvion);
+		AirportFrameOld airportFrame = new AirportFrameOld(nbPisteArr, nbPisteDep, nbPlace, nbAvion);
 
 		BlockingQueue<Avion> airArr = new ArrayBlockingQueue<Avion>(nbAvion);
 		BlockingQueue<Avion> tarmacLand = new ArrayBlockingQueue<Avion>(nbPisteArr);
