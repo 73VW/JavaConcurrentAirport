@@ -1,4 +1,5 @@
 package airport.com;
+
 import java.util.concurrent.BlockingQueue;
 //represente l'avion
 
@@ -17,10 +18,10 @@ public class Avion implements Runnable {
 	int nbPlace;
 
 	int position;
-	
-	public Avion(AirportFrame _airportFrame, String _codePlane, BlockingQueue<Avion> _airArr, BlockingQueue<Avion> _tarmacLand,
-			BlockingQueue<Avion> _tarmacTakeOff, BlockingQueue<Avion> _terminal, BlockingQueue<Avion> _airDep,
-			int _nbAvion, int _nbPisteArr, int _nbPisteDep, int _nbPlace) {
+
+	public Avion(AirportFrame _airportFrame, String _codePlane, BlockingQueue<Avion> _airArr,
+			BlockingQueue<Avion> _tarmacLand, BlockingQueue<Avion> _tarmacTakeOff, BlockingQueue<Avion> _terminal,
+			BlockingQueue<Avion> _airDep, int _nbAvion, int _nbPisteArr, int _nbPisteDep, int _nbPlace) {
 		airportFrame = _airportFrame;
 		codePlane = _codePlane;
 
@@ -37,7 +38,46 @@ public class Avion implements Runnable {
 	}
 
 	public void run() {
-		
+
+		try {
+			inAirArrive();
+			landing();
+			terminal();
+			liftOn();
+			inAirDep();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void inAirArrive() throws InterruptedException {
+		airArr.put(this);
+		Thread.sleep(1000);
+	}
+
+	private void landing() throws InterruptedException {
+		tarmacLand.put(this);
+		airArr.remove();
+		Thread.sleep(1000);
+	}
+
+	private void terminal() throws InterruptedException {
+		terminal.put(this);
+		tarmacLand.remove();
+		Thread.sleep(1000);
+	}
+
+	private void liftOn() throws InterruptedException {
+		tarmacTakeOff.put(this);
+		terminal.remove();
+		Thread.sleep(1000);
+	}
+
+	private void inAirDep() throws InterruptedException {
+		airDep.put(this);
+		tarmacTakeOff.remove();
+		Thread.sleep(1000);
 	}
 
 	public String getCode() {

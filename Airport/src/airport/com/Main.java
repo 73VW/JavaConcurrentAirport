@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String[] args) {
 		int nbAvion = 20; //nombre d'avion 
 		int nbPisteArr = 2;//pistes d'atterrisage
-		int nbPisteDep = 2;//"" de depart
+		int nbPisteDep = 2;//piste de depart
 		int nbPlace = 4; //parking 
 
 		AirportFrame airportFrame = new AirportFrame(nbPisteArr, nbPisteDep, nbPlace, nbAvion);
