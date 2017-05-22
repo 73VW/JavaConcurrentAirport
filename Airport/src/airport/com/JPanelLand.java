@@ -3,6 +3,7 @@ package airport.com;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -20,6 +21,7 @@ public class JPanelLand extends JPanel
 		{
 		nbPisteArr = _nbPisteArr;
 		imgRoad = _imgRoad;
+		nbPlanesLanding = 0;
 		geometry();
 		control();
 		appearance();
@@ -28,6 +30,13 @@ public class JPanelLand extends JPanel
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
+
+	public void setNbAvionsLand(int nbAvions)
+		{
+		nbPlanesLanding = nbAvions;
+		nbLandingLabel.setText("nb avion en approche :"+nbPlanesLanding);
+		updateImages();
+		}
 
 	/*------------------------------*\
 	|*				Set				*|
@@ -41,6 +50,21 @@ public class JPanelLand extends JPanel
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
+	private void updateImages()
+		{
+		Iterator<JLabel> it = arrayArr.iterator();
+		for(int i = 0; i < nbPlanesLanding; i++)
+			{
+				JLabel label = it.next();
+				label.setVisible(true);
+			}
+		for(int i = 0; i < nbPisteArr-nbPlanesLanding; i++)
+			{
+			JLabel label = it.next();
+			label.setVisible(false);
+			}
+		}
+
 	private void geometry()
 		{
 		// JComponent : Instanciation
@@ -48,7 +72,7 @@ public class JPanelLand extends JPanel
 
 		arrayArr = new ArrayList<JLabel>();
 
-		nbLandingLabel = new JLabel("nb avion en approche :", SwingConstants.CENTER);
+		nbLandingLabel = new JLabel("nb avion en approche :"+nbPlanesLanding, SwingConstants.CENTER);
 
 		// Layout : Specification
 			{
@@ -89,6 +113,7 @@ public class JPanelLand extends JPanel
 	\*------------------------------------------------------------------*/
 	//input
 	private int nbPisteArr;
+	private int nbPlanesLanding;
 
 	// Tools
 	private JLabel nbLandingLabel;

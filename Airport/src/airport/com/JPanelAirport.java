@@ -26,6 +26,16 @@ public class JPanelAirport extends JPanel
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
+	public void setNbAvionsLand(int nbAvions)
+		{
+		this.jPanelLand.setNbAvionsLand(nbAvions);
+		}
+
+	public void setNbAvionsDep(int nbAvions)
+		{
+		this.jPanelTakeOff.setNbAvionsDep(nbAvions);
+		}
+
 	/*------------------------------*\
 	|*				Set				*|
 	\*------------------------------*/
@@ -44,11 +54,11 @@ public class JPanelAirport extends JPanel
 
 		imgRoad = new ImageIcon("img/piste.png");
 
-		JPanel jPanelLand = new JPanelLand(nbPisteArr, imgRoad);
+		jPanelLand = new JPanelLand(nbPisteArr, imgRoad);
 
 		JPanel jPanelAirportImg = new JPanelAirportImg();
 
-		JPanel takeOffPanel = new JPanelTakeOff(nbPisteDep, imgRoad);
+		jPanelTakeOff = new JPanelTakeOff(nbPisteDep, imgRoad);
 
 		// Layout : Specification
 			{
@@ -62,7 +72,7 @@ public class JPanelAirport extends JPanel
 		// JComponent : add
 		add(jPanelLand);
 		add(jPanelAirportImg);
-		add(takeOffPanel);
+		add(jPanelTakeOff);
 
 		}
 
@@ -85,5 +95,7 @@ public class JPanelAirport extends JPanel
 
 	// Tools
 	private ImageIcon imgRoad;
+	private JPanelLand jPanelLand;
+	private JPanelTakeOff jPanelTakeOff;
 
 	}

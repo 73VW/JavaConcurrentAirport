@@ -4,6 +4,7 @@ package airport.com;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -30,6 +31,12 @@ public class JPanelPark extends JPanel
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
+	public void setNbAvionsTarmac(int nbAvions)
+		{
+		nbPlanesTarmac = nbAvions;
+		updateImages();
+		}
+
 	/*------------------------------*\
 	|*				Set				*|
 	\*------------------------------*/
@@ -41,6 +48,21 @@ public class JPanelPark extends JPanel
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
+
+	private void updateImages()
+		{
+		Iterator<JLabel> it = listTerm.iterator();
+		for(int i = 0; i < nbPlanesTarmac; i++)
+			{
+				JLabel label = it.next();
+				label.setVisible(true);
+			}
+		for(int i = 0; i < nbPlaces-nbPlanesTarmac; i++)
+			{
+			JLabel label = it.next();
+			label.setVisible(false);
+			}
+		}
 
 	private void geometry()
 		{
@@ -85,6 +107,7 @@ public class JPanelPark extends JPanel
 
 	//inputs
 	private int nbPlaces;
+	private int nbPlanesTarmac;
 
 	// Tools
 	private ArrayList<JLabel> listTerm;

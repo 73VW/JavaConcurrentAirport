@@ -17,6 +17,8 @@ public class JPanelOnAir extends JPanel
 
 	public JPanelOnAir()
 		{
+		nbAvionAirArr = 0;
+		nbAvionAirDep = 0;
 		geometry();
 		control();
 		appearance();
@@ -25,6 +27,16 @@ public class JPanelOnAir extends JPanel
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
+
+	public void setNbAvionsAirArr(int nbAvions){
+		nbAvionAirArr = nbAvions;
+		nbOnAirLabel.setText("nb avion en air (arrive) : " + nbAvionAirArr);
+	}
+
+	public void setNbAvionsAirDep(int nbAvions){
+		nbAvionAirDep = nbAvions;
+		nbOnAirLeaveLabel.setText("nb avion en air (depart) : " + nbAvionAirDep);
+	}
 
 	/*------------------------------*\
 	|*				Set				*|
@@ -42,8 +54,8 @@ public class JPanelOnAir extends JPanel
 		{
 		// JComponent : Instanciation
 		ImageIcon imgOnAir = new ImageIcon("img/onair.png");
-		nbOnAirLabel = new JLabel("nb avion en air (arrive) :", SwingConstants.CENTER);
-		nbOnAirLeaveLabel = new JLabel("nb avion en air (depart) :", SwingConstants.CENTER);
+		nbOnAirLabel = new JLabel("nb avion en air (arrive) : " + nbAvionAirArr, SwingConstants.CENTER);
+		nbOnAirLeaveLabel = new JLabel("nb avion en air (depart) :" + nbAvionAirDep, SwingConstants.CENTER);
 		// Layout : Specification
 			{
 			GridLayout gridLayout = new GridLayout(2, 2);
@@ -78,5 +90,7 @@ public class JPanelOnAir extends JPanel
 	// Tools
 	private JLabel nbOnAirLabel;
 	private JLabel nbOnAirLeaveLabel;
+	private int nbAvionAirArr;
+	private int nbAvionAirDep;
 
 	}

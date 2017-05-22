@@ -3,6 +3,7 @@ package airport.com;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -20,6 +21,7 @@ public class JPanelTakeOff extends JPanel
 		{
 		nbPisteDep = _nbPisteDep;
 		imgRoad = _imgRoad;
+		nbPlanesDeparting = 0;
 		geometry();
 		control();
 		appearance();
@@ -28,6 +30,13 @@ public class JPanelTakeOff extends JPanel
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
+
+	public void setNbAvionsDep(int nbAvions)
+		{
+		nbPlanesDeparting = nbAvions;
+		nbTakeOffLabel.setText("nb avion au départ :"+nbPlanesDeparting);
+		updateImages();
+		}
 
 	/*------------------------------*\
 	|*				Set				*|
@@ -41,12 +50,27 @@ public class JPanelTakeOff extends JPanel
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
+	private void updateImages()
+		{
+		Iterator<JLabel> it = arrayDep.iterator();
+		for(int i = 0; i < nbPlanesDeparting; i++)
+			{
+				JLabel label = it.next();
+				label.setVisible(true);
+			}
+		for(int i = 0; i < nbPisteDep-nbPlanesDeparting; i++)
+			{
+			JLabel label = it.next();
+			label.setVisible(false);
+			}
+		}
+
 	private void geometry()
 		{
 		// JComponent : Instanciation
 
 		ImageIcon imgTakeOff = new ImageIcon("img/takeoff.png");
-		nbTakeOffLabel = new JLabel("nb avion au départ :", SwingConstants.CENTER);
+		nbTakeOffLabel = new JLabel("nb avion au départ :"+nbPlanesDeparting, SwingConstants.CENTER);
 		arrayDep = new ArrayList<JLabel>();
 		// Layout : Specification
 			{
@@ -86,6 +110,7 @@ public class JPanelTakeOff extends JPanel
 
 	//input
 	private int nbPisteDep;
+	private int nbPlanesDeparting;
 	private ImageIcon imgRoad;
 
 	// Tools
