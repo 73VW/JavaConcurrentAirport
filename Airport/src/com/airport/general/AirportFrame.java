@@ -1,11 +1,9 @@
 
-package airport.com;
+package com.airport.general;
 
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,12 +12,6 @@ public class AirportFrame extends JFrame
 	{
 
 	private static final long serialVersionUID = 1L;
-	//liste d'avion à chaque endroits
-	private List<Avion> avionOnAirArray;
-	private List<Avion> avionLandingArray;
-	private List<Avion> avionTermArray;
-	private List<Avion> avionTakeOffArray;
-	private List<Avion> avionOnAirLeaveArray;
 
 	//images d'avion
 
@@ -41,12 +33,6 @@ public class AirportFrame extends JFrame
 		nbPlace = _nbPlace;
 
 		threadList = _threadList;
-
-		avionOnAirArray = new ArrayList<Avion>();
-		avionLandingArray = new ArrayList<Avion>();
-		avionTermArray = new ArrayList<Avion>();
-		avionTakeOffArray = new ArrayList<Avion>();
-		avionOnAirLeaveArray = new ArrayList<Avion>();
 
 		JPanel panel = new JPanel(new BorderLayout());
 
@@ -92,6 +78,7 @@ public class AirportFrame extends JFrame
 	public void setNbAvionsTarmac(int nbAvions)
 		{
 		this.jPanelPark.setNbAvionsTarmac(nbAvions);
+		this.jPanelAirport.setNbAvionsTarmac(nbAvions);
 		}
 
 	public void setNbAvionsDep(int nbAvions)

@@ -1,27 +1,27 @@
 
-package airport.com;
+package com.airport.general;
 
-import java.awt.Color;
-import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class JPanelPark extends JPanel
+public class JPanelTakeOff extends JPanel
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JPanelPark(int _nbPlaces)
+	public JPanelTakeOff(int _nbPisteDep, ImageIcon _imgRoad)
 		{
-		nbPlaces = _nbPlaces;
+		nbPisteDep = _nbPisteDep;
+		imgRoad = _imgRoad;
+		nbPlanesDeparting = 0;
 		geometry();
 		control();
 		appearance();
@@ -31,9 +31,10 @@ public class JPanelPark extends JPanel
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	public void setNbAvionsTarmac(int nbAvions)
+	public void setNbAvionsDep(int nbAvions)
 		{
-		nbPlanesTarmac = nbAvions;
+		nbPlanesDeparting = nbAvions;
+		nbTakeOffLabel.setText("nb avion au départ :"+nbPlanesDeparting);
 		updateImages();
 		}
 
@@ -51,13 +52,13 @@ public class JPanelPark extends JPanel
 
 	private void updateImages()
 		{
-		Iterator<JLabel> it = listTerm.iterator();
-		for(int i = 0; i < nbPlanesTarmac; i++)
+		Iterator<JLabel> it = arrayDep.iterator();
+		for(int i = 0; i < nbPlanesDeparting; i++)
 			{
 				JLabel label = it.next();
 				label.setVisible(true);
 			}
-		for(int i = 0; i < nbPlaces-nbPlanesTarmac; i++)
+		for(int i = 0; i < nbPisteDep-nbPlanesDeparting; i++)
 			{
 			JLabel label = it.next();
 			label.setVisible(false);
@@ -67,28 +68,30 @@ public class JPanelPark extends JPanel
 	private void geometry()
 		{
 		// JComponent : Instanciation
-		listTerm = new ArrayList<JLabel>();
-		for(int i = 1; i <= nbPlaces; i++)
-			{
-			ImageIcon imgPark = new ImageIcon("img/waiting.png");
-			JLabel imgParkLabel = new JLabel("", Tools.scaleImage(imgPark, 50, 50), SwingConstants.CENTER);
-			imgParkLabel.setVisible(false);
-			listTerm.add(imgParkLabel);
-			imgParkLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-			// JComponent : add
-			add(imgParkLabel);
-
-			}
+		ImageIcon imgTakeOff = new ImageIcon("img/takeoff.png");
+		nbTakeOffLabel = new JLabel("nb avion au départ :"+nbPlanesDeparting, SwingConstants.CENTER);
+		arrayDep = new ArrayList<JLabel>();
 		// Layout : Specification
 			{
-			FlowLayout flowlayout = new FlowLayout(FlowLayout.CENTER);
-			setLayout(flowlayout);
+			GridLayout gridLayout = new GridLayout(2 + (nbPisteDep - 1), 1);
+			setLayout(gridLayout);
 
 			// flowlayout.setHgap(20);
 			// flowlayout.setVgap(20);
 			}
 
+		for(int i = 1; i <= nbPisteDep; i++)
+			{
+			JLabel imgTakeOffLabel = new JLabel("", Tools.scaleImage(imgTakeOff, 50, 50), SwingConstants.CENTER);
+			imgTakeOffLabel.setVisible(false);
+			arrayDep.add(imgTakeOffLabel);
+			add(new JLabel("", Tools.scaleImage(imgRoad, 50, 50), SwingConstants.CENTER));
+			add(imgTakeOffLabel);
+			}
+
+		// JComponent : add
+		add(nbTakeOffLabel);
 		}
 
 	private void control()
@@ -105,11 +108,12 @@ public class JPanelPark extends JPanel
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 
-	//inputs
-	private int nbPlaces;
-	private int nbPlanesTarmac;
+	//input
+	private int nbPisteDep;
+	private int nbPlanesDeparting;
+	private ImageIcon imgRoad;
 
 	// Tools
-	private ArrayList<JLabel> listTerm;
-
+	private JLabel nbTakeOffLabel;
+	private ArrayList<JLabel> arrayDep;
 	}

@@ -1,24 +1,27 @@
 
-package airport.com;
+package com.airport.general;
 
-import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.util.Iterator;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class JPanelOnAir extends JPanel
+public class JPanelPark extends JPanel
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JPanelOnAir()
+	public JPanelPark(int _nbPlaces)
 		{
-		nbAvionAirArr = 0;
-		nbAvionAirDep = 0;
+		nbPlaces = _nbPlaces;
 		geometry();
 		control();
 		appearance();
@@ -28,15 +31,11 @@ public class JPanelOnAir extends JPanel
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	public void setNbAvionsAirArr(int nbAvions){
-		nbAvionAirArr = nbAvions;
-		nbOnAirLabel.setText("nb avion en air (arrive) : " + nbAvionAirArr);
-	}
-
-	public void setNbAvionsAirDep(int nbAvions){
-		nbAvionAirDep = nbAvions;
-		nbOnAirLeaveLabel.setText("nb avion en air (depart) : " + nbAvionAirDep);
-	}
+	public void setNbAvionsTarmac(int nbAvions)
+		{
+		nbPlanesTarmac = nbAvions;
+		updateImages();
+		}
 
 	/*------------------------------*\
 	|*				Set				*|
@@ -50,26 +49,45 @@ public class JPanelOnAir extends JPanel
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
+	private void updateImages()
+		{
+		Iterator<JLabel> it = listTerm.iterator();
+		for(int i = 0; i < nbPlanesTarmac; i++)
+			{
+				JLabel label = it.next();
+				label.setVisible(true);
+			}
+		for(int i = 0; i < nbPlaces-nbPlanesTarmac; i++)
+			{
+			JLabel label = it.next();
+			label.setVisible(false);
+			}
+		}
+
 	private void geometry()
 		{
 		// JComponent : Instanciation
-		ImageIcon imgOnAir = new ImageIcon("img/onair.png");
-		nbOnAirLabel = new JLabel("nb avion en air (arrive) : " + nbAvionAirArr, SwingConstants.CENTER);
-		nbOnAirLeaveLabel = new JLabel("nb avion en air (depart) :" + nbAvionAirDep, SwingConstants.CENTER);
+		listTerm = new ArrayList<JLabel>();
+		for(int i = 1; i <= nbPlaces; i++)
+			{
+			ImageIcon imgPark = new ImageIcon("img/waiting.png");
+			JLabel imgParkLabel = new JLabel("", Tools.scaleImage(imgPark, 50, 50), SwingConstants.CENTER);
+			imgParkLabel.setVisible(false);
+			listTerm.add(imgParkLabel);
+			imgParkLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+			// JComponent : add
+			add(imgParkLabel);
+
+			}
 		// Layout : Specification
 			{
-			GridLayout gridLayout = new GridLayout(2, 2);
-			setLayout(gridLayout);
+			FlowLayout flowlayout = new FlowLayout(FlowLayout.CENTER);
+			setLayout(flowlayout);
 
 			// flowlayout.setHgap(20);
 			// flowlayout.setVgap(20);
 			}
-
-		// JComponent : add
-		add(new JLabel("", Tools.scaleImage(imgOnAir, 50, 50), SwingConstants.CENTER));
-		add(new JLabel("", Tools.scaleImage(imgOnAir, 50, 50), SwingConstants.CENTER));
-		add(nbOnAirLabel);
-		add(nbOnAirLeaveLabel);
 
 		}
 
@@ -87,10 +105,11 @@ public class JPanelOnAir extends JPanel
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 
+	//inputs
+	private int nbPlaces;
+	private int nbPlanesTarmac;
+
 	// Tools
-	private JLabel nbOnAirLabel;
-	private JLabel nbOnAirLeaveLabel;
-	private int nbAvionAirArr;
-	private int nbAvionAirDep;
+	private ArrayList<JLabel> listTerm;
 
 	}

@@ -1,5 +1,5 @@
 
-package airport.com;
+package com.airport.general;
 
 import java.awt.GridLayout;
 
@@ -17,6 +17,7 @@ public class JPanelAirportImg extends JPanel
 
 	public JPanelAirportImg()
 		{
+		nbAvions = 0;
 		geometry();
 		control();
 		appearance();
@@ -25,6 +26,12 @@ public class JPanelAirportImg extends JPanel
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
+
+	public void setNbAvionsTarmac(int nbAvions)
+		{
+		this.nbAvions = nbAvions;
+		jLabelNbTerm.setText("nb avion au terminal :" + this.nbAvions);
+		}
 
 	/*------------------------------*\
 	|*				Set				*|
@@ -43,7 +50,7 @@ public class JPanelAirportImg extends JPanel
 		// JComponent : Instanciation
 		ImageIcon imgAir = new ImageIcon("img/airport.png");
 
-		jLabelNbTerm = new JLabel("nb avion au terminal :", SwingConstants.CENTER);
+		jLabelNbTerm = new JLabel("nb avion au terminal :" + nbAvions, SwingConstants.CENTER);
 
 		// Layout : Specification
 			{
@@ -72,6 +79,8 @@ public class JPanelAirportImg extends JPanel
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
+	// Input
+	private int nbAvions;
 
 	// Tools
 

@@ -1,22 +1,27 @@
 
-package airport.com;
+package com.airport.general;
 
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
-public class JPanelAirport extends JPanel
+public class JPanelLand extends JPanel
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JPanelAirport(int _nbPisteArr, int _nbPisteDep)
+	public JPanelLand(int _nbPisteArr, ImageIcon _imgRoad)
 		{
 		nbPisteArr = _nbPisteArr;
-		nbPisteDep = _nbPisteDep;
+		imgRoad = _imgRoad;
+		nbPlanesLanding = 0;
 		geometry();
 		control();
 		appearance();
@@ -28,12 +33,9 @@ public class JPanelAirport extends JPanel
 
 	public void setNbAvionsLand(int nbAvions)
 		{
-		this.jPanelLand.setNbAvionsLand(nbAvions);
-		}
-
-	public void setNbAvionsDep(int nbAvions)
-		{
-		this.jPanelTakeOff.setNbAvionsDep(nbAvions);
+		nbPlanesLanding = nbAvions;
+		nbLandingLabel.setText("nb avion en approche :"+nbPlanesLanding);
+		updateImages();
 		}
 
 	/*------------------------------*\
@@ -48,21 +50,33 @@ public class JPanelAirport extends JPanel
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
+	private void updateImages()
+		{
+		Iterator<JLabel> it = arrayArr.iterator();
+		for(int i = 0; i < nbPlanesLanding; i++)
+			{
+				JLabel label = it.next();
+				label.setVisible(true);
+			}
+		for(int i = 0; i < nbPisteArr-nbPlanesLanding; i++)
+			{
+			JLabel label = it.next();
+			label.setVisible(false);
+			}
+		}
+
 	private void geometry()
 		{
 		// JComponent : Instanciation
+		imgLand = new ImageIcon("img/landing.png");
 
-		imgRoad = new ImageIcon("img/piste.png");
+		arrayArr = new ArrayList<JLabel>();
 
-		jPanelLand = new JPanelLand(nbPisteArr, imgRoad);
-
-		JPanel jPanelAirportImg = new JPanelAirportImg();
-
-		jPanelTakeOff = new JPanelTakeOff(nbPisteDep, imgRoad);
+		nbLandingLabel = new JLabel("nb avion en approche :"+nbPlanesLanding, SwingConstants.CENTER);
 
 		// Layout : Specification
 			{
-			GridLayout gridLayout = new GridLayout(1, 3);
+			GridLayout gridLayout = new GridLayout(2 + (nbPisteArr - 1), 1);
 			setLayout(gridLayout);
 
 			// flowlayout.setHgap(20);
@@ -70,9 +84,17 @@ public class JPanelAirport extends JPanel
 			}
 
 		// JComponent : add
-		add(jPanelLand);
-		add(jPanelAirportImg);
-		add(jPanelTakeOff);
+
+		for(int i = 1; i <= nbPisteArr; i++)
+			{
+			JLabel imgLandingLabel = new JLabel("", Tools.scaleImage(imgLand, 50, 50), SwingConstants.CENTER);
+			imgLandingLabel.setVisible(false);
+			arrayArr.add(imgLandingLabel);
+			add(imgLandingLabel);
+			add(new JLabel("", Tools.scaleImage(imgRoad, 50, 50), SwingConstants.CENTER));
+			}
+		add(new JLabel());
+		add(nbLandingLabel);
 
 		}
 
@@ -91,11 +113,12 @@ public class JPanelAirport extends JPanel
 	\*------------------------------------------------------------------*/
 	//input
 	private int nbPisteArr;
-	private int nbPisteDep;
+	private int nbPlanesLanding;
 
 	// Tools
+	private JLabel nbLandingLabel;
+	private ArrayList<JLabel> arrayArr;
 	private ImageIcon imgRoad;
-	private JPanelLand jPanelLand;
-	private JPanelTakeOff jPanelTakeOff;
+	private ImageIcon imgLand;
 
 	}

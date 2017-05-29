@@ -1,23 +1,24 @@
 
-package airport.com;
+package com.airport.general;
 
-import java.awt.FlowLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.GridLayout;
 
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
-public class JPanelBoutton extends JPanel
+public class JPanelOnAir extends JPanel
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JPanelBoutton(Thread[] threadList)
+	public JPanelOnAir()
 		{
-		this.threadList=threadList;
+		nbAvionAirArr = 0;
+		nbAvionAirDep = 0;
 		geometry();
 		control();
 		appearance();
@@ -26,6 +27,16 @@ public class JPanelBoutton extends JPanel
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
+
+	public void setNbAvionsAirArr(int nbAvions){
+		nbAvionAirArr = nbAvions;
+		nbOnAirLabel.setText("nb avion en air (arrive) : " + nbAvionAirArr);
+	}
+
+	public void setNbAvionsAirDep(int nbAvions){
+		nbAvionAirDep = nbAvions;
+		nbOnAirLeaveLabel.setText("nb avion en air (depart) : " + nbAvionAirDep);
+	}
 
 	/*------------------------------*\
 	|*				Set				*|
@@ -42,74 +53,44 @@ public class JPanelBoutton extends JPanel
 	private void geometry()
 		{
 		// JComponent : Instanciation
-		start = new JButton("Start");
-		stop = new JButton("Stop");
-
+		ImageIcon imgOnAir = new ImageIcon("img/onair.png");
+		nbOnAirLabel = new JLabel("nb avion en air (arrive) : " + nbAvionAirArr, SwingConstants.CENTER);
+		nbOnAirLeaveLabel = new JLabel("nb avion en air (depart) :" + nbAvionAirDep, SwingConstants.CENTER);
 		// Layout : Specification
 			{
-			FlowLayout flowLayout = new FlowLayout();
-			setLayout(flowLayout);
+			GridLayout gridLayout = new GridLayout(2, 2);
+			setLayout(gridLayout);
 
 			// flowlayout.setHgap(20);
 			// flowlayout.setVgap(20);
 			}
 
 		// JComponent : add
-		add(start);
-		add(stop);
+		add(new JLabel("", Tools.scaleImage(imgOnAir, 50, 50), SwingConstants.CENTER));
+		add(new JLabel("", Tools.scaleImage(imgOnAir, 50, 50), SwingConstants.CENTER));
+		add(nbOnAirLabel);
+		add(nbOnAirLeaveLabel);
+
 		}
 
 	private void control()
 		{
-		start.addMouseListener(new MouseAdapter()
-			{
-
-			@Override
-			public void mouseClicked(MouseEvent e)
-				{
-				// TODO START
-				for(int i = 0; i < threadList.length; i++)
-					{
-					threadList[i].start();
-					}
-				}
-			});
-
-		stop.addMouseListener(new MouseAdapter()
-			{
-
-			@Override
-			public void mouseClicked(MouseEvent e)
-				{
-				// TODO STOP
-				for(int i = 0; i < threadList.length; i++)
-					{
-					try
-						{
-						threadList[i].wait();
-						}
-					catch (InterruptedException e1)
-						{
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						}
-					}
-				}
-			});
+		// rien
 		}
 
 	private void appearance()
 		{
-		//rien
+		// rien
 		}
 
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
-	//input
-	Thread[] threadList;
 
 	// Tools
-	private JButton start;
-	private JButton stop;
+	private JLabel nbOnAirLabel;
+	private JLabel nbOnAirLeaveLabel;
+	private int nbAvionAirArr;
+	private int nbAvionAirDep;
+
 	}
