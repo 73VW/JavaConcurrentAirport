@@ -17,6 +17,9 @@ public class Main
 		int nbPlace = 6; //parking
 		Thread[] threadList = new Thread[nbAvion];
 
+		// Debut du test de performance
+		long startTime = System.currentTimeMillis();
+
 		AirportFrame airportFrame = new AirportFrame(nbPisteArr, nbPisteDep, nbPlace, threadList);
 
 		ListAvion airArr = new ListAvion(nbAvion);
@@ -34,5 +37,9 @@ public class Main
 		airportFrame.setVisible(true);
 		airportFrame.pack();
 
+		// Test de performance
+		long endTime = System.currentTimeMillis();
+		System.out.println("Duration : " + (endTime - startTime) + " ms");
+		
 		}
 	}

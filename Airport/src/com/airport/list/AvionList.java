@@ -6,7 +6,7 @@ import java.util.Random;
 import com.airport.general.AirportFrame;
 
 public class AvionList implements Runnable
-	{
+{
 
 	AirportFrame airportFrame;
 	String planeCode;
@@ -24,7 +24,7 @@ public class AvionList implements Runnable
 	int position;
 
 	public AvionList(AirportFrame _airportFrame, String _planeCode, ListAvion _airArr, ListAvion _tarmacLand, ListAvion _tarmacTakeOff, ListAvion _terminal, ListAvion _airDep, int _nbAvion, int _nbPisteArr, int _nbPisteDep, int _nbPlace)
-		{
+	{
 		airportFrame = _airportFrame;
 		planeCode = _planeCode;
 
@@ -40,29 +40,29 @@ public class AvionList implements Runnable
 		nbPlace = _nbPlace;
 
 		sleepUnit = 1000;
-		}
+	}
 
 	@Override
 	public void run()
-		{
+	{
 		while(true)
-			{
+		{
 			try
-				{
+			{
 				inAirArrive();
 				landing();
 				terminal();
 				liftOn();
 				inAirDep();
-				}
+			}
 			catch (InterruptedException e)
-				{
-				}
+			{
 			}
 		}
+	}
 
 	private void inAirArrive() throws InterruptedException
-		{
+	{
 		System.out.println(this.getCode() + "in air");
 		airArr.add(this);
 		airDep.remove(this);
@@ -70,10 +70,10 @@ public class AvionList implements Runnable
 		this.airportFrame.setNbAvionsAirDep(airDep.size());
 		int sleepTime = new Random().nextInt(10);
 		Thread.sleep(sleepTime * sleepUnit);
-		}
+	}
 
 	private void landing() throws InterruptedException
-		{
+	{
 		System.out.println(this.getCode() + "landing");
 		tarmacLand.add(this);
 		airArr.remove(this);
@@ -81,10 +81,10 @@ public class AvionList implements Runnable
 		this.airportFrame.setNbAvionsAirArr(airArr.size());
 		int sleepTime = new Random().nextInt(10);
 		Thread.sleep(sleepTime * sleepUnit);
-		}
+	}
 
 	private void terminal() throws InterruptedException
-		{
+	{
 		System.out.println(this.getCode() + "moving to terminal");
 		terminal.add(this);
 		tarmacLand.remove(this);
@@ -92,10 +92,10 @@ public class AvionList implements Runnable
 		this.airportFrame.setNbAvionsLand(tarmacLand.size());
 		int sleepTime = new Random().nextInt(10);
 		Thread.sleep(sleepTime * sleepUnit);
-		}
+	}
 
 	private void liftOn() throws InterruptedException
-		{
+	{
 		System.out.println(this.getCode() + "moving to tarmac");
 		tarmacTakeOff.add(this);
 		terminal.remove(this);
@@ -103,10 +103,10 @@ public class AvionList implements Runnable
 		this.airportFrame.setNbAvionsTarmac(terminal.size());
 		int sleepTime = new Random().nextInt(10);
 		Thread.sleep(sleepTime * sleepUnit);
-		}
+	}
 
 	private void inAirDep() throws InterruptedException
-		{
+	{
 		System.out.println(this.getCode() + "Departing");
 		airDep.add(this);
 		tarmacTakeOff.remove(this);
@@ -114,11 +114,11 @@ public class AvionList implements Runnable
 		this.airportFrame.setNbAvionsDep(tarmacTakeOff.size());
 		int sleepTime = new Random().nextInt(10);
 		Thread.sleep(sleepTime * sleepUnit);
-		}
+	}
 
 	public String getCode()
-		{
+	{
 		return planeCode;
-		}
-
 	}
+
+}
